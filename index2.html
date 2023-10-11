@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>App de Estudiantes</title>
+</head>
+<body>
+    <h1>Estudiantes</h1>
+    <select id="seleccion"></select>
+    <button onclick="crearEstudiante()">Crear Estudiante</button>
+
+    <h2>Cursos</h2>
+    <input id="cursoNombre" type="text" placeholder="Nombre del curso">
+    <button onclick="crearCurso()">Crear Curso</button>
+    <ul id="listaCursos"></ul> <!-- Aquí mostraremos los cursos -->
+
+    <script>
+        let estudiantes = [];
+        let cursos = [];
+
+        class Estudiante {
+            constructor(id, nombre, carrera) {
+                this.id = id;
+                this.nombre = nombre;
+                this.carrera = carrera;
+                this.cursos = [];
+            }
+        }
+
+        class Curso {
+            constructor(id, nombre, duracion, creditos) {
+                this.id = id;
+                this.nombre = nombre;
+                this.duracion = duracion;
+                this.creditos = creditos;
+                this.estudiantes = [];
+            }
+        }
+
+        function crearEstudiante() {
+            let id = prompt('ID del estudiante');
+            let nombre = prompt('Nombre del estudiante');
+            let carrera = prompt('Carrera del estudiante');
+
+            let estudiante = new Estudiante(id, nombre, carrera);
+            estudiantes.push(estudiante);
+
+            // Actualizamos el select con el nombre del estudiante
+            let seleccion = document.getElementById('seleccion');
+            let option = document.createElement('option');
+            option.text = estudiante.nombre;
+            seleccion.add(option);
+        }
+
+        function crearCurso() {
+            let estudianteSeleccionado = document.getElementById('seleccion').value;
+            let nombreCurso = document.getElementById('cursoNombre').value;
+
+            const estudiante = estudiantes.find(e => e.nombre === estudianteSeleccionado);
+            if (estudiante) {
+                let curso = new Curso(cursos.length + 1, nombreCurso, 'Duración', 'Créditos');
+                curso.estudiantes.push(estudiante);
+                cursos.push(curso);
+                console.log(cursos);
+
+                // Mostramos los cursos en la interfaz
+                let listaCursos = document.getElementById('listaCursos');
+                listaCursos.innerHTML = '';
+                for (const c of estudiante.cursos) {
+                    let item = document.createElement('li');
+                    item.textContent = c.nombre;
+                    listaCursos.appendChild(item);
+                }
+            } else {
+                console.log('Estudiante no encontrado');
+            }
+
+            // Limpiamos el campo del nombre del curso
+            document.getElementById('cursoNombre').value = '';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Horarios de Estudiantes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="card">
+        <img src="img/estudiante.jpg" alt="">
+        <a class="btn" onclick="agregar_estudiante_toggle()">Agregar Estudiante</a>
+        <section id="agregar_estudiante">
+            <div class="content">
+                <h1>Agregar Estudiante</h1>
+                    <input type="text" placeholder="Digite Id..." id="estudianteId">
+                <input type="text" placeholder="Digite nombre..." id="estudianteNombre">
+                <input type="text" placeholder="carrera..." id="estudianteCarrera">
+                <button onclick="crearEstudiante()">Agregar</button>
+            </div>
+            <a class="close" onclick="agregar_estudiante_toggle()"><img src="img/cancel.png"></a>
+        </section>
+    </div>
+    <div class="card">
+        <img src="img/curso.jpg" alt="">
+        <a class="btn" onclick="agregar_curso_toggle()">Agregar Curso</a>
+        <section id="agregar_curso">
+            <div class="content">
+                <h1>Agregar Curso</h1>
+                <!-- <input type="text" placeholder="Digite codigo..." id="cursoId"> -->
+                <input type="text" placeholder="Digite nombre..." id="cursoNombre">
+                <input type="text" placeholder="Digite la Duración..." id="cursoDuracion">
+                <input type="text" placeholder="Digite los creditos..." id="cursoCreditos">
+                <label for="">Seleccione un estudiante</label><select name="seleccion" id="seleccion">
+                </select>
+                <button onclick="crearCurso()">Agregar</button>
+            </div>
+            <a class="close" onclick="agregar_curso_toggle()"><img src="img/cancel.png"></a>
+        </section>
+    </div>
+    <div class="card" style="display: flex;">
+        <img src="img/horario.jpg" alt="" style="position: relative;">
+        <div class="res" style="position: absolute;">
+            <label for="">Seleccione un estudiante</label><select name="seleccion2" id="seleccion2">
+            </select>
+            <button onclick="mostrarCursosDeEstudiante()">Mostrar</button>
+            <ul class="list">
+    
+            </ul>
+        </div>
+    </div>
+
+
+
+    
+    <script src="prueba2.js"></script>
+    <script>
+        function agregar_estudiante_toggle()
+        {
+            const modal_agregar=document.getElementById('agregar_estudiante');
+            modal_agregar.classList.toggle('active')
+        }
+
+        function agregar_curso_toggle()
+        {
+            const modal_agregar=document.getElementById('agregar_curso');
+            modal_agregar.classList.toggle('active')
+        }
+    </script>
+</body>
+</html>

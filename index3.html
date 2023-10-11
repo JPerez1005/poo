@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Horarios de Estudiantes</title>
+</head>
+<body>
+    <h1>Gestión de Horarios de Estudiantes</h1>
+    
+    <h2>Registrar un Estudiante</h2>
+    <form id="estudiante-form">
+        <label for="nombre">Nombre del Estudiante:</label>
+        <input type="text" id="nombre" required>
+        <label for="carrera">Carrera:</label>
+        <input type="text" id="carrera" required>
+        <button type="submit">Registrar Estudiante</button>
+    </form>
+    
+    <h2>Registrar un Curso</h2>
+    <form id="curso-form">
+        <label for="nombreCurso">Nombre del Curso:</label>
+        <input type="text" id="nombreCurso" required>
+        <label for="duracion">Duración del Curso:</label>
+        <input type="text" id="duracion" required>
+        <button type="submit">Registrar Curso</button>
+    </form>
+    
+    <h2>Asignar un Curso a un Estudiante</h2>
+    <form id="asignar-curso-form">
+        <label for="estudianteSelect">Estudiante:</label>
+        <select id="estudianteSelect" required>
+            <!-- Opciones de estudiante se agregarán aquí -->
+        </select>
+        <label for="cursoSelect">Curso:</label>
+        <select id="cursoSelect" required>
+            <!-- Opciones de curso se agregarán aquí -->
+        </select>
+        <button type="submit">Asignar Curso</button>
+    </form>
+    
+    <h2>Mostrar Información</h2>
+    <button id="mostrar-estudiantes">Mostrar Estudiantes</button>
+    <button id="mostrar-cursos">Mostrar Cursos</button>
+    
+    <div id="resultados">
+        <!-- Aquí se mostrará la información -->
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>
