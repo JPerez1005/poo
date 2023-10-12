@@ -1,5 +1,5 @@
-let estudiantes=[];
-let cursos=[];
+let estudiantes=JSON.parse(localStorage.getItem('estudiantes')) || [];
+let cursos=JSON.parse(localStorage.getItem('cursos')) || [];
 let horarios=JSON.parse(localStorage.getItem('gestion')) || [];
 
 class Estudiante {
@@ -21,7 +21,6 @@ class Estudiante {
         }
     }
 }
-
 
 class Curso {
     constructor(id, nombre, duracion, creditos) {
@@ -87,8 +86,6 @@ class Horario {
     
 }
 
-// 
-
 const d=document;
 
 function crearEstudiante() {
@@ -103,6 +100,7 @@ function crearEstudiante() {
     carrera.value='';
 
     estudiantes.push(estudiante);
+    localStorage.setItem('estudiantes',JSON.stringify(estudiantes));
     console.log(estudiantes);
     mostrarEstudiantes(d.getElementById('seleccion2'));
 }
@@ -119,7 +117,6 @@ function mostrarEstudiantes(selectElement) {
     }
 }
 
-
 function mostrarCursos(selectElement){
     if(cursos.length>=0){
         selectElement.innerHTML='';
@@ -131,7 +128,6 @@ function mostrarCursos(selectElement){
         console.log(' no hay cursos');
     }
 }
-
 
 function crearCurso() {
     let nombreCurso = d.getElementById('cursoNombre').value;
@@ -146,7 +142,7 @@ function crearCurso() {
         creditosCurso
     );
     cursos.push(curso);
-
+    localStorage.setItem('cursos',JSON.stringify(cursos));
     // Limpiar los campos del formulario
     d.getElementById('cursoNombre').value = '';
     d.getElementById('cursoDuracion').value = '';
