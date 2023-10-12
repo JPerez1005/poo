@@ -119,6 +119,18 @@ function mostrarEstudiantes(selectElement) {
     }
 }
 
+function mostrarCursos(selectElement){
+    if(estudiantes.cursos.length>=0){
+        selectElement.innerHTML='';
+        for (let i = 0; i < estudiantes.cursos.length; i++) {
+            const curso = estudiantes.cursos[i];
+            selectElement.innerHTML += `<option>${curso.nombre}</option>`;
+        }
+    }else{
+        console.log(' no hay cursos');
+    }
+}
+
 
 function crearCurso() {
     let estudianteSeleccionado = d.getElementById('seleccion').value;
@@ -146,9 +158,21 @@ function crearCurso() {
     d.getElementById('cursoNombre').value = '';
     d.getElementById('cursoDuracion').value = '';
     d.getElementById('cursoCreditos').value = '';
+
+    mostrarCursos(d.getElementById('seleccionC1'));
 }
 
-function mostrarCursosDeEstudiante() {
+function crearHorario(){
+    let estudianteSeleccionado = d.getElementById('seleccion2').value;
+    let cursoSeleccionado = d.getElementById('seleccionC1').value;
+
+    const estudiante = estudiantes.find(e => e.nombre === estudianteSeleccionado);
+    if(estudiante){
+        const curso = estudiantes.find(e => e.nombre === cursoSeleccionado);
+    }
+}
+
+/* function mostrarCursosDeEstudiante() {
     const estudianteSeleccionado = d.getElementById('seleccion2').value;
     const estudiante = estudiantes.find(e => e.nombre === estudianteSeleccionado);
 
@@ -165,7 +189,7 @@ function mostrarCursosDeEstudiante() {
     } else {
         console.log('Estudiante no encontrado');
     }
-}
+} */
 
 // Ejemplo de uso:
 const estudiante1 = new Estudiante(1, "Estudiante A", 20);
