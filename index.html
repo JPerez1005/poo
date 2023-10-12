@@ -41,9 +41,23 @@
     </div>
     <div class="card" style="display: flex;">
         <img src="img/horario.jpg" alt="" style="position: relative;">
-        <div class="res" style="position: absolute;">
-            <label for="">Seleccione un estudiante</label><select name="seleccion2" id="seleccion2">
-            </select>
+        <a class="btn" onclick="agregar_horario_toggle()">Agregar Horario</a>
+        <section id="agregar_horario">
+            <div class="content">
+                <h1>Agregar Horario</h1>
+                <!-- <input type="text" placeholder="Digite codigo..." id="cursoId"> -->
+                <input type="text" placeholder="Digite nombre..." id="cursoNombre">
+                <input type="text" placeholder="Digite la Duración..." id="cursoDuracion">
+                <input type="text" placeholder="Digite los creditos..." id="cursoCreditos">
+                <label for="">Seleccione un estudiante</label><select name="seleccion2" id="seleccion2">
+                </select>
+                <button onclick="agregarHorario()">Agregar</button>
+            </div>
+            <a class="close" onclick="agregar_horario_toggle()"><img src="img/cancel.png"></a>
+            
+        </section>
+        <div class="res" style="position: absolute; margin-top: 100px;">
+            
             <button onclick="mostrarCursosDeEstudiante()">Mostrar</button>
             <ul class="list">
     
@@ -59,13 +73,19 @@
         function agregar_estudiante_toggle()
         {
             const modal_agregar=document.getElementById('agregar_estudiante');
-            modal_agregar.classList.toggle('active')
+            modal_agregar.classList.toggle('active');
         }
 
         function agregar_curso_toggle()
         {
             const modal_agregar=document.getElementById('agregar_curso');
-            modal_agregar.classList.toggle('active')
+            modal_agregar.classList.toggle('active');
+        }
+
+        function agregar_horario_toggle()
+        {
+            const modal_agregar=document.getElementById('agregar_horario');
+            modal_agregar.classList.toggle('active');
         }
     </script>
 </body>
