@@ -188,3 +188,4 @@ console.log(curso1);
 
 console.log("Horario del curso 1:");
 console.log(horario1);
+//hola
