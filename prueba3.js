@@ -1,6 +1,6 @@
 let estudiantes=[];
 let cursos=[];
-let horario=[];
+let horarios=JSON.parse(localStorage.getItem('gestion')) || [];
 
 class Estudiante {
     constructor(id, nombre, carrera) {
@@ -84,6 +84,7 @@ class Horario {
         this.cursos.splice(index, 1);
         }
     }
+    
 }
 
 // 
@@ -103,7 +104,6 @@ function crearEstudiante() {
 
     estudiantes.push(estudiante);
     console.log(estudiantes);
-    mostrarEstudiantes(d.getElementById('seleccion'));
     mostrarEstudiantes(d.getElementById('seleccion2'));
 }
 
@@ -112,125 +112,102 @@ function mostrarEstudiantes(selectElement) {
         selectElement.innerHTML = '';
         for (let i = 0; i < estudiantes.length; i++) {
             const estudiante = estudiantes[i];
-            selectElement.innerHTML += `<option>${estudiante.nombre}</option>`;
+            selectElement.innerHTML += `<option>${estudiante.id}</option>`;
         }
     } else {
         console.log('no hay usuarios');
     }
 }
 
-function mostrarCursosDeEstudiante(selectElement) {
-    const estudianteSeleccionado = selectElement.value;
-    let mostrarSelect=d.getElementById('seleccionC1');
-    const estudiante = estudiantes.find(e => e.nombre === estudianteSeleccionado);
-    mostrarSelect.innerHTML='';
-    if (estudiante) {
-        const cursosEstudiante = estudiante.cursos;
-        if (cursosEstudiante.length > 0) {
-            console.log(`Cursos de ${estudiante.nombre}:`);
-            cursosEstudiante.forEach(curso => {
-                mostrarSelect.innerHTML+=`<option>${curso.nombre}</option>`;
-                console.log(`ID: ${curso.id}, Nombre: ${curso.nombre}, Duración: ${curso.duracion}`);
-            });
-        } else {
-            console.log(`${estudiante.nombre} no está inscrito en ningún curso.`);
+
+function mostrarCursos(selectElement){
+    if(cursos.length>=0){
+        selectElement.innerHTML='';
+        for (let i = 0; i < cursos.length; i++) {
+            const curso = cursos[i];
+            selectElement.innerHTML += `<option>${curso.id}</option>`;
         }
-    } else {
-        console.log('Estudiante no encontrado');
+    }else{
+        console.log(' no hay cursos');
     }
 }
 
 
-// function mostrarCursos(selectElement){
-//     if(cursos.length>=0){
-//         selectElement.innerHTML='';
-//         for (let i = 0; i < cursos.length; i++) {
-//             const curso = cursos[i];
-//             selectElement.innerHTML += `<option>${curso.nombre}</option>`;
-//         }
-//     }else{
-//         console.log(' no hay cursos');
-//     }
-// }
-
-
 function crearCurso() {
-    let estudianteSeleccionado = d.getElementById('seleccion').value;
     let nombreCurso = d.getElementById('cursoNombre').value;
+    let idCurso = d.getElementById('cursoId').value;
     let duracionCurso = d.getElementById('cursoDuracion').value;
     let creditosCurso = d.getElementById('cursoCreditos').value;
 
-    const estudiante = estudiantes.find(e => e.nombre === estudianteSeleccionado);
-    if (estudiante) {
-        let curso = new Curso(
-            cursos.length + 1,//aumenta a uno
-            nombreCurso,
-            duracionCurso,
-            creditosCurso
-        );
-        curso.inscribirEstudiante(estudiante);
-        estudiante.inscribirseEnCurso(curso);
-        cursos.push(curso);
-        console.log(estudiantes);
-    } else {
-        console.log('Estudiante no encontrado');
-    }
+    let curso = new Curso(
+        idCurso,
+        nombreCurso,
+        duracionCurso,
+        creditosCurso
+    );
+    cursos.push(curso);
 
     // Limpiar los campos del formulario
     d.getElementById('cursoNombre').value = '';
     d.getElementById('cursoDuracion').value = '';
     d.getElementById('cursoCreditos').value = '';
 
-    mostrarCursosDeEstudiante(d.getElementById('seleccion'));
+    mostrarCursos(d.getElementById('seleccionC1'));
 }
 
 function crearHorario(){
+    let dia = d.getElementById('dia').value;
+    let horaInicio = d.getElementById('horaInicio').value;
+    let horaFin = d.getElementById('horaFin').value;
+
     let estudianteSeleccionado = d.getElementById('seleccion2').value;
     let cursoSeleccionado = d.getElementById('seleccionC1').value;
 
-    const estudiante = estudiantes.find(e => e.nombre === estudianteSeleccionado);
-    if(estudiante){
-        const curso = estudiantes.find(e => e.nombre === cursoSeleccionado);
+    const estudiante = estudiantes.find(e => e.id === estudianteSeleccionado);
+    if (estudiante){
+        const curso = cursos.find(c => c.id === cursoSeleccionado);
+        if (curso){
+            let horario = new Horario(
+                curso.id, // Pasa el curso directamente al horario
+                estudiante.id,
+                dia,
+                horaInicio,
+                horaFin
+            );
+
+            horarios.push(horario);
+            localStorage.setItem('gestion',JSON.stringify(horarios));
+        } else {
+            console.log('No se encontró el curso');
+        }
+    } else {
+        console.log('No se encontró el estudiante');
     }
 }
 
-/* function mostrarCursosDeEstudiante() {
-    const estudianteSeleccionado = d.getElementById('seleccion2').value;
-    const estudiante = estudiantes.find(e => e.nombre === estudianteSeleccionado);
+function mostrarHorario() {
+    const modal_ver = document.getElementById('ver_horario');
+    modal_ver.classList.toggle('active');
+    let list = document.getElementById('list');
 
-    if (estudiante) {
-        const cursosEstudiante = estudiante.cursos;
-        if (cursosEstudiante.length > 0) {
-            console.log(`Cursos de ${estudiante.nombre}:`);
-            cursosEstudiante.forEach(curso => {
-                console.log(`ID: ${curso.id}, Nombre: ${curso.nombre}, Duración: ${curso.duracion}`);
-            });
-        } else {
-            console.log(`${estudiante.nombre} no está inscrito en ningún curso.`);
+    list.innerHTML = '';
+
+    const dias = {};
+
+    for (let i = 0; i < horarios.length; i++) {
+        const horario = horarios[i];
+        const dia = horario.dia;
+
+        if (!dias[dia]) {
+            dias[dia] = [];
         }
-    } else {
-        console.log('Estudiante no encontrado');
+        dias[dia].push(horario);
     }
-} */
 
-// Ejemplo de uso:
-const estudiante1 = new Estudiante(1, "Estudiante A", 20);
-const estudiante2 = new Estudiante(2, "Estudiante B", 22);
-const curso1 = new Curso(1, "Matemáticas", "Profesor A");
-const curso2 = new Curso(2, "Historia", "Profesor B");
-const horario1 = new Horario(1, "Lunes", "09:00 AM", "11:00 AM");
-
-curso1.inscribirEstudiante(estudiante1);
-curso2.inscribirEstudiante(estudiante2);
-
-estudiante1.inscribirseEnCurso(curso1);
-estudiante2.inscribirseEnCurso(curso2);
-
-console.log("Información del estudiante 1:");
-console.log(estudiante1);
-
-console.log("Información del curso 1:");
-console.log(curso1);
-
-console.log("Horario del curso 1:");
-console.log(horario1);
+    for (const dia in dias) {
+        list.innerHTML += `<h1>${dia.charAt(0).toUpperCase() + dia.slice(1)}:</h1><br>`;
+        dias[dia].forEach((horario) => {
+            list.innerHTML += `<li>id estudiante: ${horario.estudiante_cod}, Curso: ${horario.curso_cod}, Hora inicio: ${horario.horaInicio}, Hora Fin: ${horario.horaFin}</li>`;
+        });
+    }
+}

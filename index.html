@@ -29,48 +29,56 @@
             <div class="content">
                 <h1>Agregar Curso</h1>
                 <!-- <input type="text" placeholder="Digite codigo..." id="cursoId"> -->
+                <input type="text" placeholder="Digite id..." id="cursoId">
                 <input type="text" placeholder="Digite nombre..." id="cursoNombre">
                 <input type="text" placeholder="Digite la Duración..." id="cursoDuracion">
                 <input type="text" placeholder="Digite los creditos..." id="cursoCreditos">
-                <label for="">Seleccione un estudiante</label><select name="seleccion" id="seleccion">
-                </select>
                 <button onclick="crearCurso()">Agregar</button>
             </div>
             <a class="close" onclick="agregar_curso_toggle()"><img src="img/cancel.png"></a>
         </section>
     </div>
-    <div class="card" style="display: flex;">
+    <div class="card">
         <img src="img/horario.jpg" alt="" style="position: relative;">
         <a class="btn" onclick="agregar_horario_toggle()">Agregar Horario</a>
         <section id="agregar_horario">
             <div class="content">
                 <h1>Agregar Horario</h1>
                 <!-- <input type="text" placeholder="Digite codigo..." id="cursoId"> -->
-                <input type="text" placeholder="Digite nombre..." id="cursoNombre">
-                <input type="text" placeholder="Digite la Duración..." id="cursoDuracion">
-                <input type="text" placeholder="Digite los creditos..." id="cursoCreditos">
+                <label for="">Dia de la semana</label>
+                <select name="dias" id="dia">
+                    <option value="lunes">lunes</option>
+                    <option value="martes">martes</option>
+                    <option value="miercoles">miercoles</option>
+                    <option value="jueves">jueves</option>
+                    <option value="viernes">viernes</option>
+                    <option value="sabado">sabado</option>
+                    <option value="domingo">domingo</option>
+                </select>
+                <input type="text" placeholder="hora inicio de la clase..." id="horaInicio">
+                <input type="text" placeholder="hora fin de la clase..." id="horaFin">
                 <label for="">Seleccione un estudiante</label><select name="seleccion2" id="seleccion2">
                 </select>
                 <label for="">Seleccione un curso</label><select name="seleccionC1" id="seleccionC1">
                 </select>
-                <button onclick="agregarHorario()">Agregar</button>
+                <button onclick="crearHorario()">Agregar</button>
             </div>
             <a class="close" onclick="agregar_horario_toggle()"><img src="img/cancel.png"></a>
             
         </section>
-        <div class="res" style="position: absolute; margin-top: 100px;">
-            
-            <button onclick="mostrarCursosDeEstudiante()">Mostrar</button>
-            <ul class="list">
-    
-            </ul>
-        </div>
+        <section id="ver_horario">
+            <div class="content">
+                <ul id="list"></ul>
+            </div>
+            <a class="close" onclick="ver_horario_toggle()"><img src="img/cancel.png"></a>
+        </section>
+        <button onclick="mostrarHorario()" style="position: absolute; margin-top: 100px;">Mostrar</button>
     </div>
 
 
 
     
-    <script src="prueba2.js"></script>
+    <script src="prueba3.js"></script>
     <script>
         function agregar_estudiante_toggle()
         {
@@ -88,6 +96,12 @@
         {
             const modal_agregar=document.getElementById('agregar_horario');
             modal_agregar.classList.toggle('active');
+        }
+
+        function ver_horario_toggle()
+        {
+            const modal_ver=document.getElementById('ver_horario');
+            modal_ver.classList.toggle('active');
         }
     </script>
 </body>
